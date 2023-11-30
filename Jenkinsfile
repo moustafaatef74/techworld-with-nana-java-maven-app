@@ -32,9 +32,9 @@ pipeline {
                     buildImage(env.IMAGE_NAME)
                     dockerLogin()
                     dockerPush(env.IMAGE_NAME)
+                }
             }
         }
-
         stage("deploy") {
             environment {
                 AWS_ACCESS_KEY_ID = credentials('jenkins_aws_access_key_id')
@@ -48,7 +48,6 @@ pipeline {
                     sh "envsubst < kubernetes/service.yaml kubectl apply -f -"
                 }
             }
-        }
-    }   
-}
+        }  
+    }
 }
